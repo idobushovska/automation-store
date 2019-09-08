@@ -1,6 +1,11 @@
 import unittest
+import yaml
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+
+with open("../settings.yml", 'r') as ymlfile:
+    cfg = yaml.load(ymlfile)
+ymlfile.close()
 
 
 def login_decorator(func):
@@ -13,8 +18,8 @@ def login_decorator(func):
             inp_email = driver.find_element_by_id('email')
             inp_pass = driver.find_element_by_id('passwd')
             btn_login = driver.find_element_by_id('SubmitLogin')
-            inp_email.send_keys("test21@email.com")
-            inp_pass.send_keys("test1234")
+            inp_email.send_keys(cfg['website']['login'])
+            inp_pass.send_keys(cfg['website']['pass'])
             btn_login.click()
             driver.get(current_url)
         func(*args, **kwargs)
@@ -36,8 +41,8 @@ def anonymous_decorator(func):
 class HomePageTest(unittest.TestCase):
 
     def setUp(self):
-        self.driver = webdriver.Chrome(executable_path='../../bin/chromedriver')
-        self.driver.get("http://automationpractice.com/index.php")
+        self.driver = webdriver.Chrome(executable_path=cfg['selenium']['Chrome']['driver_path'])
+        self.driver.get(cfg['website']['homepage'])
 
     def search_from_home_page(self):
         driver = self.driver
@@ -61,4 +66,4 @@ class HomePageTest(unittest.TestCase):
 
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main(warnings='ignore')
