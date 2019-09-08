@@ -8,4 +8,4 @@ Practice of websites automation testing
 1. Download & Install chromedriver
     1. In case of Mac OS: `LATEST=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE) && wget http://chromedriver.storage.googleapis.com/$LATEST/chromedriver_mac64.zip && mkdir .bin/ && unzip chromedriver_mac64.zip && mv chromedriver .bin/ && rm chromedriver_mac64.zip`
     1. In case of Linux: `LATEST=$(wget -q -O - http://chromedriver.storage.googleapis.com/LATEST_RELEASE) && wget http://chromedriver.storage.googleapis.com/$LATEST/chromedriver_linux64.zip && mkdir .bin/ && unzip chromedriver_linux64.zip && mv chromedriver .bin/ && rm chromedriver_linux64.zip`
-1. Run tests: 'python src/base.py'
+1. Run tests: `python src/base.py`
