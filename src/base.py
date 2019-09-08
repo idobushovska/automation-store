@@ -3,7 +3,7 @@ import yaml
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 
-with open("../settings.yml", 'r') as ymlfile:
+with open("./settings.yml", 'r') as ymlfile:
     cfg = yaml.load(ymlfile)
 ymlfile.close()
 

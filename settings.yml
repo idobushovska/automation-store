@@ -7,6 +7,6 @@ selenium:
     - Chrome
     - Firefox
   Chrome:
-    driver_path: ../.bin/chromedriver
+    driver_path: .bin/chromedriver
   Firefox:
-    driver_path: ../.bin/geckodriver
+    driver_path: .bin/geckodriver
