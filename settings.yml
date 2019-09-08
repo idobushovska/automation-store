@@ -1,0 +1,10 @@
+website:
+    url: http://automationpractice.com/index.php
+selenium:
+  drivers:
+    - Chrome
+    - Firefox
+  Chrome:
+    driverPath: ../../bin/chromedriver
+  Firefox:
+    driverPath: ../../bin/geckodriver
