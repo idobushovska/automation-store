@@ -30,6 +30,14 @@ class HomePageTest(unittest.TestCase):
     def test_add_item_to_cart_from_homepage_as_guest(self):
         self.add_to_cart_from_home_page()
 
+    @auth.login_decorator
+    def test_quick_view_from_homepage_as_customer(self):
+        self.open_quick_view(logged_in=True)
+
+    @auth.anonymous_decorator
+    def test_quick_view_from_homepage_as_guest(self):
+        self.open_quick_view(logged_in=False)
+
     def setUp(self):
         self.config = settings.config
         self.driver = webdriver.Chrome(executable_path=self.config['selenium']['Chrome']['driver_path'])
@@ -47,9 +55,9 @@ class HomePageTest(unittest.TestCase):
 
     def add_to_cart_from_home_page(self):
         driver = self.driver
-        product = selectors.get_all_products_on_page(driver)[1]
-        hover = ActionChains(self.driver).move_to_element(product)
-        hover.perform()
+        product_element = selectors.get_all_products_on_page(driver)[1]
+        hover_action = ActionChains(self.driver).move_to_element(product_element)
+        hover_action.perform()
         add_to_cart_button = self.wait.until(
             EC.visibility_of_element_located((By.XPATH, '//*[@id="homefeatured"]/li[2]/div/div[2]/div[2]/a[1]'))
         )
@@ -61,6 +69,32 @@ class HomePageTest(unittest.TestCase):
 
         modal_message = driver.find_element_by_xpath('//*[@id="layer_cart"]/div[1]/div[1]/h2')
         assert modal_message.text == "Product successfully added to your shopping cart"
+
+    def open_quick_view(self, logged_in=False):
+        driver = self.driver
+        product_element = selectors.get_all_products_on_page(driver)[1]
+        hover_action = ActionChains(self.driver).move_to_element(product_element)
+        hover_action.perform()
+        quick_view_button = self.wait.until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="homefeatured"]/li[2]/div/div[1]/div/a[2]'))
+        )
+        quick_view_button.click()
+
+        quick_view_iframe = self.wait.until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "fancybox-iframe"))
+        )
+        driver.switch_to.frame(quick_view_iframe)
+
+        wishlist_button = driver.find_element_by_id("wishlist_button")
+        wishlist_button.click()
+        message = self.wait.until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "fancybox-error"))
+        )
+        if not logged_in:
+            assert message.text == "You must be logged in to manage your wishlist."
+        else:
+            assert message.text == "Added to your wishlist."
+
 
     def tearDown(self):
         self.driver.close()
