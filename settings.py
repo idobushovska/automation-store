@@ -7,12 +7,9 @@ config = {
         "pass": "test1234"
     },
     "selenium": {
-        "drivers": ["Chrome", "Firefox"],
+        "drivers": ["Chrome"],
         "Chrome": {
             "driver_path": ".bin/chromedriver"
-        },
-        "Firefox": {
-            "driver_path": ".bin/geckodriver"
         }
     }
 }

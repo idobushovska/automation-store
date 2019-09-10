@@ -16,11 +16,13 @@ class HomePageTest(unittest.TestCase):
 
     @auth.login_decorator
     def test_search_from_home_page_as_customer(self):
-        self.search_from_home_page(query="CHIFFON")
+        self.search_from_home_page(title="My Store",
+                                   query="CHIFFON")
 
     @auth.anonymous_decorator
     def test_search_from_home_page_as_guest(self):
-        self.search_from_home_page(query="CHIFFON")
+        self.search_from_home_page(title="My Store",
+                                   query="CHIFFON")
 
     @auth.login_decorator
     def test_add_item_to_cart_from_homepage_as_customer(self):
@@ -44,9 +46,9 @@ class HomePageTest(unittest.TestCase):
         self.driver.get(self.config['website']['homepage'])
         self.wait = WebDriverWait(self.driver, 10)
 
-    def search_from_home_page(self, query):
+    def search_from_home_page(self, title, query):
         driver = self.driver
-        self.assertIn("My Store", driver.title)
+        self.assertIn(title, driver.title)
         elem = driver.find_element_by_id("search_query_top")
         elem.send_keys(query)
         elem.send_keys(Keys.RETURN)
