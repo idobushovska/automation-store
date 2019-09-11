@@ -21,7 +21,8 @@ class CriticalPathTest(unittest.TestCase):
     4. Shopping Cart.
     5. Checkout.
     6. View order status."""
-    @auth.anonymous_decorator
+    @unittest.skip('skip')
+    @auth.anonymous
     def test_register_user(self):
         driver = self.driver
         signin_button = driver.find_element_by_class_name("login")
@@ -72,12 +73,58 @@ class CriticalPathTest(unittest.TestCase):
 
     @auth.logged_customer
     def test_search_items_and_add_to_cart(self):
-        pass
+        driver = self.driver
+        search_input = driver.find_element_by_id("search_query_top")
 
+        search_input.send_keys("summer")
+        search_input.send_keys(Keys.RETURN)
+
+        products = selectors.get_all_products_on_page(driver)
+        hover_action = ActionChains(self.driver).move_to_element(products[0])
+        hover_action.perform()
+
+        assert len(products) > 0
+        add_to_cart_button = self.wait.until(
+            EC.element_to_be_clickable((By.CLASS_NAME, 'ajax_add_to_cart_button'))
+        )
+        add_to_cart_button.click()
+
+        self.wait.until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "layer_cart_product"))
+        )
+
+        continue_button = driver.find_element_by_class_name("continue")
+        continue_button.click()
+
+        search_input = driver.find_element_by_id("search_query_top")
+        search_input.clear()
+        search_input.send_keys("short")
+        products = selectors.get_all_products_on_page(driver)
+        hover_action = ActionChains(self.driver).move_to_element(products[0])
+        hover_action.perform()
+        assert len(products) > 0
+        add_to_cart_button = self.wait.until(
+            EC.visibility_of_element_located((By.XPATH, '//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]'))
+        )
+        add_to_cart_button.click()
+
+        self.wait.until(
+            EC.visibility_of_element_located((By.CLASS_NAME, "layer_cart_product"))
+        )
+
+        quantity_items_in_cart_span = self.wait.until(
+            EC.visibility_of_element_located((By.CLASS_NAME, 'ajax_cart_quantity'))
+        )
+        continue_button = driver.find_element_by_class_name("continue")
+        continue_button.click()
+        assert quantity_items_in_cart_span.text == '2'
+
+    @unittest.skip('skip')
     @auth.logged_customer
     def test_checkout(self):
         pass
 
+    @unittest.skip('skip')
     @auth.logged_customer
     def verify_order(self):
         pass
