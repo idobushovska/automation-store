@@ -14,29 +14,29 @@ from helpers import selectors
 
 class HomePageTest(unittest.TestCase):
 
-    @auth.login_decorator
+    @auth.logged_customer
     def test_search_from_home_page_as_customer(self):
         self.search_from_home_page(title="My Store",
                                    query="CHIFFON")
 
-    @auth.anonymous_decorator
+    @auth.anonymous
     def test_search_from_home_page_as_guest(self):
         self.search_from_home_page(title="My Store",
                                    query="CHIFFON")
 
-    @auth.login_decorator
+    @auth.logged_customer
     def test_add_item_to_cart_from_homepage_as_customer(self):
         self.add_to_cart_from_home_page()
 
-    @auth.anonymous_decorator
+    @auth.anonymous
     def test_add_item_to_cart_from_homepage_as_guest(self):
         self.add_to_cart_from_home_page()
 
-    @auth.login_decorator
+    @auth.logged_customer
     def test_quick_view_from_homepage_as_customer(self):
         self.open_quick_view(logged_in=True)
 
-    @auth.anonymous_decorator
+    @auth.anonymous
     def test_quick_view_from_homepage_as_guest(self):
         self.open_quick_view(logged_in=False)
 
