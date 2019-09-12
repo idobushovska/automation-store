@@ -4,7 +4,6 @@ import unittest
 import time
 from selenium import webdriver
 import re
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
@@ -20,7 +19,7 @@ class CriticalPathTest(unittest.TestCase):
     4. Shopping Cart.
     5. Checkout.
     6. View order status."""
-    unittest.skip('skip')
+    @unittest.skip('skip')
     @auth.anonymous
     def test_register_user(self):
         driver = self.driver
