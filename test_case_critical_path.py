@@ -3,14 +3,12 @@
 import unittest
 import time
 from selenium import webdriver
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 import settings
 from helpers import auth
-from helpers import selectors
+from helpers import actions
 
 
 class CriticalPathTest(unittest.TestCase):
@@ -74,49 +72,17 @@ class CriticalPathTest(unittest.TestCase):
     @auth.logged_customer
     def test_search_items_and_add_to_cart(self):
         driver = self.driver
-        search_input = driver.find_element_by_id("search_query_top")
+        wait = self.wait
 
-        search_input.send_keys("summer")
-        search_input.send_keys(Keys.RETURN)
+        products = actions.search(driver, "summer")
+        actions.add_product_to_cart(driver, wait, products[0])
 
-        products = selectors.get_all_products_on_page(driver)
-        hover_action = ActionChains(self.driver).move_to_element(products[0])
-        hover_action.perform()
-
-        assert len(products) > 0
-        add_to_cart_button = self.wait.until(
-            EC.element_to_be_clickable((By.CLASS_NAME, 'ajax_add_to_cart_button'))
-        )
-        add_to_cart_button.click()
-
-        self.wait.until(
-            EC.visibility_of_element_located((By.CLASS_NAME, "layer_cart_product"))
-        )
-
-        continue_button = driver.find_element_by_class_name("continue")
-        continue_button.click()
-
-        search_input = driver.find_element_by_id("search_query_top")
-        search_input.clear()
-        search_input.send_keys("short")
-        products = selectors.get_all_products_on_page(driver)
-        hover_action = ActionChains(self.driver).move_to_element(products[0])
-        hover_action.perform()
-        assert len(products) > 0
-        add_to_cart_button = self.wait.until(
-            EC.visibility_of_element_located((By.XPATH, '//*[@id="center_column"]/ul/li[1]/div/div[2]/div[2]/a[1]'))
-        )
-        add_to_cart_button.click()
-
-        self.wait.until(
-            EC.visibility_of_element_located((By.CLASS_NAME, "layer_cart_product"))
-        )
+        products = actions.search(driver, "short")
+        actions.add_product_to_cart(driver, wait, products[0])
 
         quantity_items_in_cart_span = self.wait.until(
             EC.visibility_of_element_located((By.CLASS_NAME, 'ajax_cart_quantity'))
         )
-        continue_button = driver.find_element_by_class_name("continue")
-        continue_button.click()
         assert quantity_items_in_cart_span.text == '2'
 
     @unittest.skip('skip')
