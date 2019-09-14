@@ -7,6 +7,7 @@ import re
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support.select import Select
 import settings
 from helpers import auth, actions, selectors
 
@@ -19,30 +20,37 @@ class CriticalPathTest(unittest.TestCase):
     4. Shopping Cart.
     5. Checkout.
     6. View order status."""
-    @unittest.skip('skip')
+
     @auth.anonymous
     def test_register_user(self):
         driver = self.driver
         signin_button = driver.find_element_by_class_name("login")
         signin_button.click()
 
-        email_input = driver.find_element_by_id("email_create")
-        create_customer_button = driver.find_element_by_id("SubmitCreate")
+        email_input = self.wait.until(
+            EC.visibility_of_element_located((By.ID, 'email_create'))
+        )
+
+        create_customer_button = self.wait.until(
+            EC.element_to_be_clickable((By.ID, 'SubmitCreate'))
+        )
 
         email_input.send_keys(self.new_customer['email'])
+
         create_customer_button.click()
 
-        firstname_input = driver.find_element_by_id("customer_firstname")
+        firstname_input = self.wait.until(
+            EC.visibility_of_element_located((By.ID, 'customer_firstname'))
+        )
         lastname_input = driver.find_element_by_id("customer_lastname")
         password_input = driver.find_element_by_id("passwd")
         billing_firstname_input = driver.find_element_by_id("firstname")
         billing_lastname_input = driver.find_element_by_id("lastname")
         billing_address_input = driver.find_element_by_id("address1")
         city_input = driver.find_element_by_id("city")
-        state_select = driver.find_element_by_xpath("//select[@id='id_state']/option[text()='{}']".format(self.new_customer['state']))
+        state_select = Select(driver.find_element_by_id('id_state'))
         zip_input = driver.find_element_by_id("postcode")
         mobile_input = driver.find_element_by_id("phone_mobile")
-        submit_button = driver.find_element_by_id("submitAccount")
 
         firstname_input.send_keys(self.new_customer['firstname'])
         lastname_input.send_keys(self.new_customer['lastname'])
@@ -51,10 +59,13 @@ class CriticalPathTest(unittest.TestCase):
         billing_lastname_input.send_keys(self.new_customer['lastname'])
         billing_address_input.send_keys(self.new_customer['address'])
         city_input.send_keys(self.new_customer['city'])
-        state_select.click()
+        state_select.select_by_visible_text(self.new_customer['state'])
         zip_input.send_keys(self.new_customer['zip'])
         mobile_input.send_keys(self.new_customer['mobile'])
 
+        submit_button = self.wait.until(
+            EC.element_to_be_clickable((By.ID, 'submitAccount'))
+        )
         submit_button.click()
 
         my_personal_information_link = self.wait.until(
@@ -62,12 +73,12 @@ class CriticalPathTest(unittest.TestCase):
         )
 
         my_personal_information_link.click()
-        firstname_input = driver.find_element_by_id("firstname")
+        firstname_input = self.wait.until(
+            EC.visibility_of_element_located((By.ID, 'firstname'))
+        )
         lastname_input = driver.find_element_by_id("lastname")
-        self.config['website']['email'] = self.new_customer['email']
-        self.config['website']['passwd'] = self.new_customer['passwd']
-        assert firstname_input.value == self.new_customer['firstname']
-        assert lastname_input.value == self.new_customer['lastname']
+        assert firstname_input.get_attribute('value') == self.new_customer['firstname']
+        assert lastname_input.get_attribute('value') == self.new_customer['lastname']
 
     @auth.logged_customer
     def test_search_items_and_add_to_cart(self):
@@ -138,7 +149,6 @@ class CriticalPathTest(unittest.TestCase):
         assert len(order_number) == 9
         self.order_number = order_number
 
-    @unittest.skip('skip')
     @auth.logged_customer
     def test_verify_order(self):
         pass

@@ -12,11 +12,9 @@ def logged_customer(func):
             inp_email = driver.find_element_by_id('email')
             inp_pass = driver.find_element_by_id('passwd')
             btn_login = driver.find_element_by_id('SubmitLogin')
-
             inp_email.send_keys(cfg['website']['email'])
             inp_pass.send_keys(cfg['website']['passwd'])
             btn_login.click()
-
             driver.get(current_url)
         func(*args, **kwargs)
     return login_to_website
