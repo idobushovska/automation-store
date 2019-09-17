@@ -2,7 +2,8 @@ import unittest
 
 test_modules = [
     'test_case_home_page',
-    'test_case_critical_path'
+    'test_case_critical_path',
+    'test_case_catalogue'
 ]
 
 suite = unittest.TestSuite()
