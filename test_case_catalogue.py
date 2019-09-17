@@ -14,9 +14,34 @@ from helpers import auth, actions, selectors
 
 class CriticalPathTest(unittest.TestCase):
 
+    def test_page_header(self):
+        pass
 
+    def test_category_submenus(self):
+        pass
 
-    def test_verify_order(self):
+    def test_catalogue_filters(self):
+        pass
+
+    def test_information_menu(self):
+        pass
+
+    def test_specials_menu(self):
+        pass
+
+    def test_prod_grid_view(self):
+        pass
+
+    def test_products_list_view(self):
+        pass
+
+    def test_adding_tocart(self):
+        pass
+
+    def test_compare_products(self):
+        pass
+
+    def test_page_footer(self):
         pass
 
     def setUp(self):
