@@ -2,10 +2,13 @@
 Practice of websites automation testing. Website for testing coverage: http://automationpractice.com/index.php
 
 # Planned coverage
-[x] Critical Path (Registration/Login/Search/Add to cart/Checkout/View Order)
-[x] Home Page
-[] Catalogue
-[] Contact Form
+[X] Critical Path (Registration/Login/Search/Add to cart/Checkout/View Order)
+
+[X] Home Page
+
+[ ] Catalogue
+
+[ ] Contact Form
 
 # How to run
 1. Checkout repository `git clone git@github.com:idobushovska/automation-store.git && cd automation-store`
