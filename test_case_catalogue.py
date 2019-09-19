@@ -14,30 +14,39 @@ class CriticalPathTest(unittest.TestCase):
         header_image = self.driver.find_element_by_xpath(image_xpath)
         assert header_image.get_attribute('src') == 'http://automationpractice.com/modules/blockbanner/img/sale70.png'
 
+    @unittest.skip('skipped')
     def test_category_submenus(self):
         pass
 
+    @unittest.skip('skipped')
     def test_catalogue_filters(self):
         pass
 
+    @unittest.skip('skipped')
     def test_information_menu(self):
         pass
 
+    @unittest.skip('skipped')
     def test_specials_menu(self):
         pass
 
+    @unittest.skip('skipped')
     def test_products_grid_view(self):
         pass
 
+    @unittest.skip('skipped')
     def test_products_list_view(self):
         pass
 
+    @unittest.skip('skipped')
     def test_add_to_cart(self):
         pass
 
+    @unittest.skip('skipped')
     def test_compare_products(self):
         pass
 
+    @unittest.skip('skipped')
     def test_page_footer(self):
         pass
 
