@@ -10,7 +10,9 @@ import settings
 class CriticalPathTest(unittest.TestCase):
 
     def test_page_header(self):
-        pass
+        image_xpath = '//*[@id="header"]/div[1]/div/div/a/img'
+        header_image = self.driver.find_element_by_xpath(image_xpath)
+        assert header_image.get_attribute('src') == 'http://automationpractice.com/modules/blockbanner/img/sale70.png'
 
     def test_category_submenus(self):
         pass
@@ -43,7 +45,7 @@ class CriticalPathTest(unittest.TestCase):
         self.config = settings.config
         self.timestamp = time.time()
         self.driver = webdriver.Chrome(executable_path=self.config['selenium']['Chrome']['driver_path'])
-        self.driver.get(self.config['website']['homepage'])
+        self.driver.get(self.config['website']['catalogue'])
         self.wait = WebDriverWait(self.driver, 10)
 
     def tearDown(self):

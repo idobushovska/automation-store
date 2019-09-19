@@ -3,6 +3,7 @@
 config = {
     "website": {
         "homepage": "http://automationpractice.com/index.php",
+        "catalogue": "http://automationpractice.com/index.php?id_category=8&controller=category",
         "email": "test23@email.com",
         "passwd": "test1234",
         "new_customer": {
