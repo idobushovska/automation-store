@@ -12,16 +12,31 @@ import settings
 class CatalogueTest(unittest.TestCase):
 
     def test_page_header(self):
-        image_xpath = '//*[@id="header"]/div[1]/div/div/a/img'
-        header_image = self.driver.find_element_by_xpath(image_xpath)
-        assert header_image.get_attribute('src') == 'http://automationpractice.com/modules/blockbanner/img/sale70.png'
-        assert self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/span/strong').text == '0123-456-789'
-
+        banner_image_xpath = '//*[@id="header"]/div[1]/div/div/a/img'
+        banner_image = self.driver.find_element_by_xpath(banner_image_xpath)
+        assert banner_image.get_attribute('src') == 'http://automationpractice.com/modules/blockbanner/img/sale70.png'
+        contact_phone = self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/span/strong')
+        assert contact_phone.text == '0123-456-789'
         contact_button = self.driver.find_element_by_xpath('//*[@id="contact-link"]/a')
         assert contact_button.get_attribute('href') == 'http://automationpractice.com/index.php?controller=contact'
         assert contact_button.get_attribute('title') == 'Contact Us'
         sign_in_button = self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/div[1]/a')
         assert sign_in_button.get_attribute('href') == 'http://automationpractice.com/index.php?controller=my-account'
+        logo_image = self.driver.find_element_by_xpath('//*[@id="header_logo"]/a/img')
+        assert logo_image.get_attribute('src') == 'http://automationpractice.com/img/logo.jpg'
+        assert self.driver.find_element_by_id('search_query_top').get_attribute('placeholder') == 'Search'
+        # assert self.driver.find_element_by_xpath('//*[@id="searchbox"]/button/span').text == 'Search'
+
+    def test_header_contact_us_navigation(self):
+        contact_button = self.driver.find_element_by_xpath('//*[@id="contact-link"]/a')
+        contact_button.click()
+        contact_us_form_title = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="center_column"]/h1')))
+        assert contact_us_form_title.text == 'CUSTOMER SERVICE - CONTACT US'
+
+
+    def test_header_sign_in_navigation(self):
+        sign_in_button = self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/div[1]/a')
         sign_in_button.click()
         sign_in_form_title = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="login_form"]/h3')))
