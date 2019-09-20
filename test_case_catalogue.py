@@ -4,15 +4,28 @@ import unittest
 import time
 from selenium import webdriver
 from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 import settings
 
 
-class CriticalPathTest(unittest.TestCase):
+class CatalogueTest(unittest.TestCase):
 
     def test_page_header(self):
         image_xpath = '//*[@id="header"]/div[1]/div/div/a/img'
         header_image = self.driver.find_element_by_xpath(image_xpath)
         assert header_image.get_attribute('src') == 'http://automationpractice.com/modules/blockbanner/img/sale70.png'
+        assert self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/span/strong').text == '0123-456-789'
+
+        contact_button = self.driver.find_element_by_xpath('//*[@id="contact-link"]/a')
+        assert contact_button.get_attribute('href') == 'http://automationpractice.com/index.php?controller=contact'
+        assert contact_button.get_attribute('title') == 'Contact Us'
+        sign_in_button = self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/div[1]/a')
+        assert sign_in_button.get_attribute('href') == 'http://automationpractice.com/index.php?controller=my-account'
+        sign_in_button.click()
+        sign_in_form_title = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="login_form"]/h3')))
+        assert sign_in_form_title.text == 'ALREADY REGISTERED?'
 
     @unittest.skip('skipped')
     def test_category_submenus(self):
