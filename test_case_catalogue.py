@@ -11,7 +11,7 @@ import settings
 
 class CatalogueTest(unittest.TestCase):
 
-    def test_page_header(self):
+    def test_page_header_one(self):
         banner_image_xpath = '//*[@id="header"]/div[1]/div/div/a/img'
         banner_image = self.driver.find_element_by_xpath(banner_image_xpath)
         assert banner_image.get_attribute('src') == 'http://automationpractice.com/modules/blockbanner/img/sale70.png'
@@ -22,10 +22,16 @@ class CatalogueTest(unittest.TestCase):
         assert contact_button.get_attribute('title') == 'Contact Us'
         sign_in_button = self.driver.find_element_by_xpath('//*[@id="header"]/div[2]/div/div/nav/div[1]/a')
         assert sign_in_button.get_attribute('href') == 'http://automationpractice.com/index.php?controller=my-account'
+
+    def test_page_header_two(self):
         logo_image = self.driver.find_element_by_xpath('//*[@id="header_logo"]/a/img')
         assert logo_image.get_attribute('src') == 'http://automationpractice.com/img/logo.jpg'
         assert self.driver.find_element_by_id('search_query_top').get_attribute('placeholder') == 'Search'
-        # assert self.driver.find_element_by_xpath('//*[@id="searchbox"]/button/span').text == 'Search'
+        cart_button = self.driver.find_element_by_xpath('//*[@id="header"]/div[3]/div/div/div[3]/div/a')
+        assert cart_button.get_attribute('href') == 'http://automationpractice.com/index.php?controller=order'
+        assert cart_button.get_attribute('title') == 'View my shopping cart'
+        assert cart_button.find_element_by_xpath('//*[@id="header"]/div[3]/div/div/div[3]/div/a/b').text == 'Cart'
+        assert cart_button.find_element_by_xpath('//*[@id="header"]/div[3]/div/div/div[3]/div/a/span[5]').text == '(empty)'
 
     def test_header_contact_us_navigation(self):
         contact_button = self.driver.find_element_by_xpath('//*[@id="contact-link"]/a')
@@ -41,6 +47,14 @@ class CatalogueTest(unittest.TestCase):
         sign_in_form_title = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="login_form"]/h3')))
         assert sign_in_form_title.text == 'ALREADY REGISTERED?'
+
+    def test_header_cart_navigation(self):
+        cart_button= self.driver.find_element_by_xpath('//*[@id="header"]/div[3]/div/div/div[3]/div/a')
+        cart_button.click()
+        cart_page_title = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="cart_title"]')))
+        assert cart_page_title.text == 'SHOPPING-CART SUMMARY'
+
 
     @unittest.skip('skipped')
     def test_category_submenus(self):
