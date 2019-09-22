@@ -94,7 +94,7 @@ class CatalogueTest(unittest.TestCase):
 
     def test_footer_category(self):
         category_menu = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[2]')
-        assert category_menu.find_element_by_xpath('//*[@id="footer"]/div/section[2]/h4') == 'Categories'
+        assert category_menu.find_element_by_xpath('//*[@id="footer"]/div/section[2]/h4').text == 'Categories'
         women_menu = category_menu.find_element_by_xpath('//*[@id="footer"]/div/section[2]/div/div/ul/li/a')
         assert women_menu.get_attribute('href') =='http://automationpractice.com/index.php?id_category=3&controller=category'
         assert women_menu.text == 'Women'
@@ -104,11 +104,11 @@ class CatalogueTest(unittest.TestCase):
         women_menu.click()
         women_menu_selected = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((By.XPATH, '//*[@id="categories_block_left"]/h2')))
-        assert women_menu_selected.text == 'Women'
+        assert women_menu_selected.text == 'WOMEN'
 
     def test_footer_information(self):
         information_menu = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]')
-        assert information_menu.find_element_by_xpath('//*[@id="block_various_links_footer"]/h4') == 'Information'
+        assert information_menu.find_element_by_xpath('//*[@id="block_various_links_footer"]/h4').text == 'Information'
 
 
     def setUp(self):
