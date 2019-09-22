@@ -88,9 +88,28 @@ class CatalogueTest(unittest.TestCase):
     def test_compare_products(self):
         pass
 
-    @unittest.skip('skipped')
     def test_page_footer(self):
-        pass
+        copyright_link =  self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[4]/div/a')
+        assert copyright_link.get_attribute('href') == 'http://www.prestashop.com/'
+
+    def test_footer_category(self):
+        category_menu = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[2]')
+        assert category_menu.find_element_by_xpath('//*[@id="footer"]/div/section[2]/h4') == 'Categories'
+        women_menu = category_menu.find_element_by_xpath('//*[@id="footer"]/div/section[2]/div/div/ul/li/a')
+        assert women_menu.get_attribute('href') =='http://automationpractice.com/index.php?id_category=3&controller=category'
+        assert women_menu.text == 'Women'
+
+    def test_footer_women_navigation(self):
+        women_menu = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[2]/div/div/ul/li/a')
+        women_menu.click()
+        women_menu_selected = WebDriverWait(self.driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, '//*[@id="categories_block_left"]/h2')))
+        assert women_menu_selected.text == 'Women'
+
+    def test_footer_information(self):
+        information_menu = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]')
+        assert information_menu.find_element_by_xpath('//*[@id="block_various_links_footer"]/h4') == 'Information'
+
 
     def setUp(self):
         self.config = settings.config
