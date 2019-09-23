@@ -109,7 +109,48 @@ class CatalogueTest(unittest.TestCase):
     def test_footer_information(self):
         information_menu = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]')
         assert information_menu.find_element_by_xpath('//*[@id="block_various_links_footer"]/h4').text == 'Information'
+        link_menu_1 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[1]/a')
+        assert link_menu_1.text == 'Specials'
+        assert link_menu_1.get_attribute('href') =='http://automationpractice.com/index.php?controller=prices-drop'
+        link_menu_2 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[2]/a')
+        assert link_menu_2.text == 'New products'
+        assert link_menu_2.get_attribute('href') == 'http://automationpractice.com/index.php?controller=new-products'
+        link_menu_3 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[3]/a')
+        assert link_menu_3.text == 'Best sellers'
+        assert link_menu_3.get_attribute('href') == 'http://automationpractice.com/index.php?controller=best-sales'
+        link_menu_4 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[4]/a')
+        assert link_menu_4.text == 'Our stores'
+        assert link_menu_4.get_attribute('href') == 'http://automationpractice.com/index.php?controller=stores'
+        link_menu_5 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[5]/a')
+        assert link_menu_5.text == 'Contact us'
+        assert link_menu_5.get_attribute('href') == 'http://automationpractice.com/index.php?controller=contact'
+        link_menu_6 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[6]/a')
+        assert link_menu_6.text == 'Terms and conditions of use'
+        assert link_menu_6.get_attribute('href') == 'http://automationpractice.com/index.php?id_cms=3&controller=cms'
+        link_menu_7 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[7]/a')
+        assert link_menu_7.text == 'About us'
+        assert link_menu_7.get_attribute('href') == 'http://automationpractice.com/index.php?id_cms=4&controller=cms'
+        link_menu_8 = self.driver.find_element_by_xpath('//*[@id="block_various_links_footer"]/ul/li[8]/a')
+        assert link_menu_8.text == 'Sitemap'
+        assert link_menu_8.get_attribute('href') == 'http://automationpractice.com/index.php?controller=sitemap'
 
+    def test_footer_myaccount(self):
+        myaccount_menu = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[5]')
+        myaccount_menu_header = myaccount_menu.find_element_by_xpath('//*[@id="footer"]/div/section[5]/h4/a')
+        assert myaccount_menu_header.get_attribute('href') =='http://automationpractice.com/index.php?controller=my-account'
+        assert myaccount_menu_header.text =='My account'
+        link_menu_1 = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[5]/div/ul/li[1]/a')
+        assert link_menu_1.text == 'My orders'
+        assert link_menu_1.get_attribute('href') == 'http://automationpractice.com/index.php?controller=history'
+        link_menu_2 = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[5]/div/ul/li[2]/a')
+        assert link_menu_2.text == 'My credit slips'
+        assert link_menu_2.get_attribute('href') == 'http://automationpractice.com/index.php?controller=order-slip'
+        link_menu_3 = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[5]/div/ul/li[3]/a')
+        assert link_menu_3.text == 'My addresses'
+        assert link_menu_3.get_attribute('href') == 'http://automationpractice.com/index.php?controller=addresses'
+        link_menu_4 = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[5]/div/ul/li[4]/a')
+        assert link_menu_4.text == 'My personal info'
+        assert link_menu_4.get_attribute('href') == 'http://automationpractice.com/index.php?controller=identity'
 
     def setUp(self):
         self.config = settings.config
