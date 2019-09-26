@@ -88,9 +88,16 @@ class CatalogueTest(unittest.TestCase):
     def test_compare_products(self):
         pass
 
-    def test_page_footer(self):
+    def test_footer_store_info(self):
         copyright_link =  self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[4]/div/a')
         assert copyright_link.get_attribute('href') == 'http://www.prestashop.com/'
+        store_info = self.driver.find_element_by_xpath('//*[@id="block_contact_infos"]')
+        assert store_info.find_element_by_tag_name('h4').text == 'Store information'
+        assert store_info.find_element_by_xpath('//*[@id="block_contact_infos"]/div/ul/li[1]').text == 'Selenium Framework, Research Triangle Park, North Carolina, USA'
+        assert store_info.find_element_by_xpath('//*[@id="block_contact_infos"]/div/ul/li[2]').text == 'Call us now: (347) 466-7432'
+        email_element = store_info.find_element_by_xpath('//*[@id="block_contact_infos"]/div/ul/li[3]')
+        assert email_element.text == 'Email: support@seleniumframework.com'
+        assert email_element.find_element_by_css_selector('span/a').get_attribute('href') == 'mailto:%73%75%70%70%6f%72%74@%73%65%6c%65%6e%69%75%6d%66%72%61%6d%65%77%6f%72%6b.%63%6f%6d'
 
     def test_footer_category(self):
         category_menu = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[2]')
