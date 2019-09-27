@@ -101,7 +101,14 @@ class CatalogueTest(unittest.TestCase):
     def test_follow(self):
         assert self.driver.find_element_by_xpath('//*[@id="social_block"]/h4').text == 'Follow us'
         social_links = self.driver.find_element_by_xpath('//*[@id="social_block"]/ul')
-        assert social_links.find_element_by_tag_name('/ul/li[1]/a').get_attribute('href') == 'https://www.facebook.com/groups/525066904174158/'
+        facebook_link = social_links.find_element_by_class_name('facebook').find_element_by_tag_name('a')
+        assert facebook_link.get_attribute('href') == 'https://www.facebook.com/groups/525066904174158/'
+        twitter_link = social_links.find_element_by_class_name('twitter').find_element_by_tag_name('a')
+        assert twitter_link.get_attribute('href') == 'https://twitter.com/seleniumfrmwrk'
+        youtube_link = social_links.find_element_by_class_name('youtube').find_element_by_tag_name('a')
+        assert youtube_link.get_attribute('href') == 'https://www.youtube.com/channel/UCHl59sI3SRjQ-qPcTrgt0tA'
+        google_link = social_links.find_element_by_class_name('google-plus').find_element_by_tag_name('a')
+        assert google_link.get_attribute('href') == 'https://plus.google.com/111979135243110831526/posts'
 
 
     def test_footer_store_info(self):
@@ -113,7 +120,7 @@ class CatalogueTest(unittest.TestCase):
         assert store_info.find_element_by_xpath('//*[@id="block_contact_infos"]/div/ul/li[2]').text == 'Call us now: (347) 466-7432'
         email_element = store_info.find_element_by_xpath('//*[@id="block_contact_infos"]/div/ul/li[3]')
         assert email_element.text == 'Email: support@seleniumframework.com'
-        #assert email_element.find_element_by_tag_name('a').get_attribute('href') == 'mailto:%73%75%70%70%6f%72%74@%73%65%6c%65%6e%69%75%6d%66%72%61%6d%65%77%6f%72%6b.%63%6f%6d'
+        assert email_element.find_element_by_tag_name('a').get_attribute('href') == 'mailto:%73%75%70%70%6f%72%74@%73%65%6c%65%6e%69%75%6d%66%72%61%6d%65%77%6f%72%6b.%63%6f%6d'
 
     def test_footer_category(self):
         category_menu = self.driver.find_element_by_xpath('//*[@id="footer"]/div/section[2]')
