@@ -55,10 +55,33 @@ class CatalogueTest(unittest.TestCase):
             EC.presence_of_element_located((By.XPATH, '//*[@id="cart_title"]')))
         assert cart_page_title.text == 'SHOPPING-CART SUMMARY'
 
-
-    @unittest.skip('skipped')
     def test_category_submenus(self):
-        pass
+        women_tab = self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[1]/a')
+        assert women_tab.get_attribute('href') == 'http://automationpractice.com/index.php?id_category=3&controller=category'
+        assert women_tab.get_attribute('title') == 'Women'
+        assert women_tab.text == 'WOMEN'
+        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]/span[2]').text == 'Women'
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/span').text == 'Women'
+        women_banner_heading = "You will find here all woman fashion collections."
+        women_banner_textline_one = "This category includes all the basics of your wardrobe and much more:"
+        women_banner_textline_two = "shoes, accessories, printed t-shirts, feminine dresses, women's jeans!"
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[1]/strong').text == women_banner_heading
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[2]').text == women_banner_textline_one
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[3]/').text == women_banner_textline_two
+
+        dresses_tab = self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[2]/a')
+        dresses_tab.click()
+        assert dresses_tab.get_attribute('href') =='http://automationpractice.com/index.php?id_category=8&controller=category'
+        assert dresses_tab.get_attribute('title') == 'Dresses'
+        assert dresses_tab.text == 'DRESSES'
+        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]/a[2]').text =='Women'
+        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]/text()').text == 'Dresses'
+
+
+
+
+
+
 
     @unittest.skip('skipped')
     def test_catalogue_filters(self):
