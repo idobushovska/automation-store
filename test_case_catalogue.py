@@ -83,6 +83,19 @@ class CatalogueTest(unittest.TestCase):
         assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[2]').text == women_banner_textline_one
         assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[3]').text == women_banner_textline_two
         self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[3]/a').click()
+        tshirt_tab = self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[3]/a')
+        assert tshirt_tab.get_attribute(
+            'href') == 'http://automationpractice.com/index.php?id_category=5&controller=category'
+        assert tshirt_tab.get_attribute('title') == 'T-shirts'
+        assert tshirt_tab.text == 'T-SHIRTS'
+        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]').text == '> Women>Tops>T-shirts'
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/span').text == 'T-shirts'
+        tshirt_banner_textline_one = "The must have of your wardrobe, take a look at our different colors,"
+        tshirt_banner_textline_two = "shapes and style of our collection!"
+        assert self.driver.find_element_by_xpath(
+            '//*[@id="center_column"]/div[1]/div/div/div/p[1]').text == tshirt_banner_textline_one
+        assert self.driver.find_element_by_xpath(
+            '//*[@id="center_column"]/div[1]/div/div/div/p[2]').text == tshirt_banner_textline_two
 
 
 
