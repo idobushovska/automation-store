@@ -56,6 +56,20 @@ class CatalogueTest(unittest.TestCase):
         assert cart_page_title.text == 'SHOPPING-CART SUMMARY'
 
     def test_category_submenus(self):
+        dresses_tab = self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[2]/a')
+        assert dresses_tab.get_attribute(
+            'href') == 'http://automationpractice.com/index.php?id_category=8&controller=category'
+        assert dresses_tab.get_attribute('title') == 'Dresses'
+        assert dresses_tab.text == 'DRESSES'
+        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]').text == '> Women>Dresses'
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/span').text == 'Dresses'
+        dresses_banner_textline_one = "Find your favorites dresses from our wide choice of evening, casual or summer dresses!"
+        dresses_banner_textline_two = "We offer dresses for every day, every style and every occasion."
+        assert self.driver.find_element_by_xpath(
+            '//*[@id="center_column"]/div[1]/div/div/div/p[1]').text == dresses_banner_textline_one
+        assert self.driver.find_element_by_xpath(
+            '//*[@id="center_column"]/div[1]/div/div/div/p[2]').text == dresses_banner_textline_two
+        self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[1]/a').click()
         women_tab = self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[1]/a')
         assert women_tab.get_attribute('href') == 'http://automationpractice.com/index.php?id_category=3&controller=category'
         assert women_tab.get_attribute('title') == 'Women'
@@ -67,15 +81,9 @@ class CatalogueTest(unittest.TestCase):
         women_banner_textline_two = "shoes, accessories, printed t-shirts, feminine dresses, women's jeans!"
         assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[1]/strong').text == women_banner_heading
         assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[2]').text == women_banner_textline_one
-        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[3]/').text == women_banner_textline_two
+        assert self.driver.find_element_by_xpath('//*[@id="center_column"]/div[1]/div/div/div/p[3]').text == women_banner_textline_two
+        self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[3]/a').click()
 
-        dresses_tab = self.driver.find_element_by_xpath('//*[@id="block_top_menu"]/ul/li[2]/a')
-        dresses_tab.click()
-        assert dresses_tab.get_attribute('href') =='http://automationpractice.com/index.php?id_category=8&controller=category'
-        assert dresses_tab.get_attribute('title') == 'Dresses'
-        assert dresses_tab.text == 'DRESSES'
-        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]/a[2]').text =='Women'
-        assert self.driver.find_element_by_xpath('//*[@id="columns"]/div[1]/text()').text == 'Dresses'
 
 
 
